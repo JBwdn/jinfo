@@ -1,8 +1,13 @@
-# jinformatics
-Bio/informatics library for hackers, name pending
+# jinfo
+Extensible bio/informatics library for hackers
+
 
 Objects:
 - DNASeq, RNASeq and AASeq
+
+Functions:
+- one_hot_dna, random_dna, DNASeq_from_NCBI
+
 
 NOTES:
 Python package structure:
