@@ -1,4 +1,12 @@
-from jinfo.tables import DNA_VOCAB, RNA_VOCAB, AA_VOCAB, CODON_TABLE
+from jinfo.tables import (
+    DNA_VOCAB,
+    RNA_VOCAB,
+    AA_VOCAB,
+    CODON_TABLE,
+    RC_TABLE,
+    NT_MW_TABLE,
+    AA_MW_TABLE,
+)
 
 
 class SeqVocabError(Exception):
@@ -6,6 +14,10 @@ class SeqVocabError(Exception):
 
 
 class SeqLengthError(Exception):
+    pass
+
+
+class UnknownBaseError(Exception):
     pass
 
 
@@ -54,13 +66,13 @@ class DNASeq(BaseSeq):
 
     def transcribe(self):
         """
-        Returns: the transcript of the DNA sequence
+        Returns: RNA transcript of the DNA sequence
         """
         return self.seq.replace("T", "U")
 
     def translate(self):
         """
-        Returns: the translated protein sequence of the DNA sequence
+        Returns: translated protein sequence of the DNA sequence
         """
         transcript = self.transcribe()
         if len(transcript) % 3 != 0:
@@ -69,23 +81,40 @@ class DNASeq(BaseSeq):
         return "".join([CODON_TABLE[codon] for codon in codon_list])
 
     def reverse_complement(self):
-        return
+        """
+        Returns: reverse complement of the DNA sequence
+        """
+        return "".join([RC_TABLE[base] for base in self.seq][::-1])
 
     def find_CDS(self):
         return
 
     def MW(self):
-        return
+        """
+        Calculate MW of linear double stranded DNA
+        Returns: Molecular weight float
+        """
+        if "X" in self.seq:
+            raise UnknownBaseError("X base in sequence")
+        fw_mw = sum([NT_MW_TABLE[base] for base in self.seq]) + 17.01
+        rv_mw = sum([NT_MW_TABLE[base] for base in self.reverse_complement()]) + 17.01
+        return fw_mw + rv_mw
 
     def GC(self, dp: int = 2):
         """
-        Calculate the %GC of the DNA sequence with optional arg to control precision
-        Returns: GC percentage
+        Calculate the GC% of the DNA sequence with optional arg to control precision
+        Returns: GC percentage float
         """
         return round((self.seq.count("C") + self.seq.count("G")) / self.len, dp)
 
-    def tm(self):
-        return
+    def tm(self, dp: int = 2):
+        """
+        Calculate DNA sequence tm with optional arg to control precision
+        Returns: melting temperature float
+        """
+        import primer3
+
+        return round(primer3.calcTm(self.seq), dp)
 
 
 class RNASeq(BaseSeq):
@@ -101,7 +130,10 @@ class RNASeq(BaseSeq):
         return
 
     def reverse_transcribe(self):
-        return
+        """
+        Returns: DNA template of the RNA sequence
+        """
+        return self.seq.replace("U", "T")
 
     def translate(self):
         """
@@ -111,6 +143,15 @@ class RNASeq(BaseSeq):
             raise SeqLengthError("Seq cannot be split into codons, not a multiple of 3")
         codon_list = [self.seq[i : i + 3] for i in range(0, len(self.seq), 3)]
         return "".join([CODON_TABLE[codon] for codon in codon_list])
+
+    def MW(self):
+        """
+        Calculate MW of single stranded RNA
+        Returns: Molecular weight float
+        """
+        if "X" in self.seq:
+            raise UnknownBaseError("X base in sequence")
+        return sum([NT_MW_TABLE[base] for base in self.seq]) + 17.01
 
 
 class AASeq(BaseSeq):
@@ -126,7 +167,13 @@ class AASeq(BaseSeq):
         return
 
     def MW(self):
-        return
+        """
+        Calculate protein MW
+        Returns: Molecular weight float
+        """
+        if "X" in self.seq:
+            raise UnknownBaseError("X residue in sequence")
+        return sum([AA_MW_TABLE[base] for base in self.seq])
 
 
 if __name__ == "__main__":
