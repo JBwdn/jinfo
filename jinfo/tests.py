@@ -1,5 +1,5 @@
 import unittest
-from jinformatics.sequence import DNASeq
+from jinfo.sequence import DNASeq
 
 
 class TestDNASeq(unittest.TestCase):
