@@ -4,7 +4,8 @@ from jinfo.tables import (
     AA_VOCAB,
     CODON_TABLE,
     RC_TABLE,
-    DNA_MW_TABLE,
+    NT_MW_TABLE,
+    AA_MW_TABLE,
 )
 
 
@@ -13,6 +14,10 @@ class SeqVocabError(Exception):
 
 
 class SeqLengthError(Exception):
+    pass
+
+
+class UnknownBaseError(Exception):
     pass
 
 
@@ -86,11 +91,13 @@ class DNASeq(BaseSeq):
 
     def MW(self):
         """
-        Calculate MW of double stranded DNA
+        Calculate MW of linear double stranded DNA
         Returns: Molecular weight float
         """
-        fw_mw = sum([DNA_MW_TABLE[base] for base in self.seq]) + 17.01
-        rv_mw = sum([DNA_MW_TABLE[base] for base in self.reverse_complement()]) + 17.01
+        if "X" in self.seq:
+            raise UnknownBaseError("X base in sequence")
+        fw_mw = sum([NT_MW_TABLE[base] for base in self.seq]) + 17.01
+        rv_mw = sum([NT_MW_TABLE[base] for base in self.reverse_complement()]) + 17.01
         return fw_mw + rv_mw
 
     def GC(self, dp: int = 2):
@@ -137,6 +144,15 @@ class RNASeq(BaseSeq):
         codon_list = [self.seq[i : i + 3] for i in range(0, len(self.seq), 3)]
         return "".join([CODON_TABLE[codon] for codon in codon_list])
 
+    def MW(self):
+        """
+        Calculate MW of single stranded RNA
+        Returns: Molecular weight float
+        """
+        if "X" in self.seq:
+            raise UnknownBaseError("X base in sequence")
+        return sum([NT_MW_TABLE[base] for base in self.seq]) + 17.01
+
 
 class AASeq(BaseSeq):
     """
@@ -151,7 +167,13 @@ class AASeq(BaseSeq):
         return
 
     def MW(self):
-        return
+        """
+        Calculate protein MW
+        Returns: Molecular weight float
+        """
+        if "X" in self.seq:
+            raise UnknownBaseError("X residue in sequence")
+        return sum([AA_MW_TABLE[base] for base in self.seq])
 
 
 if __name__ == "__main__":

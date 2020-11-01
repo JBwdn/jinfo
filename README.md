@@ -9,6 +9,11 @@ Functions:
 - one_hot_dna, random_dna, DNASeq_from_NCBI
 
 
+TODO:
+- DNASeq.find_CDS()
+- DNASeq_from_NCBI()
+
+
 NOTES:
 Python package structure:
 - define classes and functions to their own files
