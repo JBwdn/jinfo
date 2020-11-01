@@ -92,5 +92,7 @@ CODON_TABLE = {
     "UGG": "W",
 }
 
+RC_TABLE = {"A": "T", "T": "A", "C": "G", "G": "C"}
+
 if __name__ == "__main__":
     pass

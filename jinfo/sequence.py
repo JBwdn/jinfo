@@ -1,4 +1,4 @@
-from jinfo.tables import DNA_VOCAB, RNA_VOCAB, AA_VOCAB, CODON_TABLE
+from jinfo.tables import DNA_VOCAB, RNA_VOCAB, AA_VOCAB, CODON_TABLE, RC_TABLE
 
 
 class SeqVocabError(Exception):
@@ -54,13 +54,13 @@ class DNASeq(BaseSeq):
 
     def transcribe(self):
         """
-        Returns: the transcript of the DNA sequence
+        Returns: RNA transcript of the DNA sequence
         """
         return self.seq.replace("T", "U")
 
     def translate(self):
         """
-        Returns: the translated protein sequence of the DNA sequence
+        Returns: translated protein sequence of the DNA sequence
         """
         transcript = self.transcribe()
         if len(transcript) % 3 != 0:
@@ -69,7 +69,10 @@ class DNASeq(BaseSeq):
         return "".join([CODON_TABLE[codon] for codon in codon_list])
 
     def reverse_complement(self):
-        return
+        """
+        Returns: reverse complement of the DNA sequence
+        """
+        return "".join([RC_TABLE[base] for base in self.seq][::-1])
 
     def find_CDS(self):
         return
