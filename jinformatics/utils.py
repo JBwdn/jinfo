@@ -2,7 +2,6 @@ def one_hot_dna(input_seq_str: str, max_seq_len: int):
     """
     One hot encode a string format dna sequence.
     Add zero padding up to the maximum length.
-
     """
     import numpy as np
 
@@ -29,8 +28,6 @@ def random_dna(seq_length: int) -> str:
 
 
 def DNASeq_from_NCBI():
-    import sequence.DNASeq
-
     return
 
 

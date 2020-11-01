@@ -35,11 +35,9 @@ class BaseSeq:
     """
 
     def __init__(self, sequence: str = "", vocab: set = None):
-        self.new_seq = sequence
         self.vocab = vocab
-        self.check_seq_valid()
-        self.seq = sequence
-        self.len = len(sequence)
+        self.update_seq(sequence)
+        self.len = len(self.seq)
         return
 
     def check_seq_valid(self):
