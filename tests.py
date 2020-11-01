@@ -1,10 +1,10 @@
 import unittest
-import sequence
+from jinformatics.sequence import DNASeq
 
 
 class TestDNASeq(unittest.TestCase):
     def setUp(self):
-        self.dna_obj = sequence.DNASeq()
+        self.dna_obj = DNASeq()
 
     def test_methods(self):
         self.dna_obj.update_seq("AAAA")

@@ -29,6 +29,8 @@ def random_dna(seq_length: int) -> str:
 
 
 def DNASeq_from_NCBI():
+    import sequence.DNASeq
+
     return
 
 
