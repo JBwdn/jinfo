@@ -37,6 +37,8 @@ def DNASeq_from_NCBI():
     Fetch a DNA sequence using the NCBI Entrez api
     Returns ji.DNASeq object
     """
+    from jinfo.sequence import DNASeq
+
     return
 
 
