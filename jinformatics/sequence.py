@@ -1,96 +1,4 @@
-DNA_VOCAB = {"A", "T", "C", "G", "X"}
-RNA_VOCAB = {"A", "U", "C", "G", "X"}
-AA_VOCAB = {
-    "G",
-    "A",
-    "L",
-    "M",
-    "F",
-    "W",
-    "K",
-    "L",
-    "Q",
-    "E",
-    "S",
-    "P",
-    "V",
-    "I",
-    "C",
-    "Y",
-    "H",
-    "R",
-    "N",
-    "D",
-    "T",
-    "*",
-}
-
-codon_table = {
-    "AUA": "I",
-    "AUC": "I",
-    "AUU": "I",
-    "AUG": "M",
-    "ACA": "T",
-    "ACC": "T",
-    "ACG": "T",
-    "ACU": "T",
-    "AAC": "N",
-    "AAU": "N",
-    "AAA": "K",
-    "AAG": "K",
-    "AGC": "S",
-    "AGU": "S",
-    "AGA": "R",
-    "AGG": "R",
-    "CUA": "L",
-    "CUC": "L",
-    "CUG": "L",
-    "CUU": "L",
-    "CCA": "P",
-    "CCC": "P",
-    "CCG": "P",
-    "CCU": "P",
-    "CAC": "H",
-    "CAU": "H",
-    "CAA": "Q",
-    "CAG": "Q",
-    "CGA": "R",
-    "CGC": "R",
-    "CGG": "R",
-    "CGU": "R",
-    "GUA": "V",
-    "GUC": "V",
-    "GUG": "V",
-    "GUU": "V",
-    "GCA": "A",
-    "GCC": "A",
-    "GCG": "A",
-    "GCU": "A",
-    "GAC": "D",
-    "GAU": "D",
-    "GAA": "E",
-    "GAG": "E",
-    "GGA": "G",
-    "GGC": "G",
-    "GGG": "G",
-    "GGU": "G",
-    "UCA": "S",
-    "UCC": "S",
-    "UCG": "S",
-    "UCU": "S",
-    "UUC": "F",
-    "UUU": "F",
-    "UUA": "L",
-    "UUG": "L",
-    "UAC": "Y",
-    "UAU": "Y",
-    "UAA": "*",
-    "UAG": "*",
-    "UGC": "C",
-    "UGU": "C",
-    "UGA": "*",
-    "UGG": "W",
-}
+from tables import DNA_VOCAB, RNA_VOCAB, AA_VOCAB, CODON_TABLE
 
 
 class SeqVocabError(Exception):
@@ -158,7 +66,7 @@ class DNASeq(BaseSeq):
         if len(transcript) % 3 != 0:
             raise SeqLengthError("Seq cannot be split into codons, not a multiple of 3")
         codon_list = [transcript[i : i + 3] for i in range(0, len(transcript), 3)]
-        return "".join([codon_table[codon] for codon in codon_list])
+        return "".join([CODON_TABLE[codon] for codon in codon_list])
 
     def reverse_complement(self):
         return
@@ -171,8 +79,7 @@ class DNASeq(BaseSeq):
 
     def GC(self, dp: int = 2):
         """
-        Calculate the %GC of the DNA sequence
-        Optional arg to control precision
+        Calculate the %GC of the DNA sequence with optional arg to control precision
         Returns: GC percentage
         """
         return round((self.seq.count("C") + self.seq.count("G")) / self.len, dp)
@@ -197,7 +104,13 @@ class RNASeq(BaseSeq):
         return
 
     def translate(self):
-        return
+        """
+        Returns: the translated protein sequence of the DNA sequence
+        """
+        if len(self.seq) % 3 != 0:
+            raise SeqLengthError("Seq cannot be split into codons, not a multiple of 3")
+        codon_list = [self.seq[i : i + 3] for i in range(0, len(self.seq), 3)]
+        return "".join([codon_table[codon] for codon in codon_list])
 
 
 class AASeq(BaseSeq):
