@@ -2,23 +2,25 @@
 Extensible bio/informatics library for hackers
 
 
-Objects:
-- DNASeq, RNASeq and AASeq
+### Objects:
+- DNASeq
+- RNASeq
+- AASeq
 
-Functions:
-- one_hot_dna, random_dna, DNASeq_from_NCBI
+### Functions:
+- one_hot_dna
+- random_dna
+- DNASeq_from_NCBI
 
 
-TODO:
+### TODO:
 - DNASeq.find_CDS()
 - DNASeq_from_NCBI()
-
-
-NOTES:
-Python package structure:
-- define classes and functions to their own files
-- add import statements to the __init__.py file
-- then can import all/selected classes using import jinformatics
-
-Python packaging reference:
-https://python-packaging.readthedocs.io/en/latest/minimal.html
+- bring one_hot_dna and random_dna in line with rest of package
+- print functions for seq classes
+- alignments classes? functions?
+- Phylogenetics
+- chemical/metabolite class
+- Tests for all seq methods
+- NCBI, ChEBI, BiGG databast interfaces
+- AASeq methods?
