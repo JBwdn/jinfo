@@ -82,13 +82,19 @@ class DNASeq(BaseSeq):
 
     def GC(self, dp: int = 2):
         """
-        Calculate the %GC of the DNA sequence with optional arg to control precision
+        Calculate the GC% of the DNA sequence with optional arg to control precision
         Returns: GC percentage
         """
         return round((self.seq.count("C") + self.seq.count("G")) / self.len, dp)
 
-    def tm(self):
-        return
+    def tm(self, dp: int = 2):
+        """
+        Calculate DNA sequence tm with optional arg to control precision
+        Returns: melting temperature
+        """
+        import primer3
+
+        return round(primer3.calcTm(self.seq), dp)
 
 
 class RNASeq(BaseSeq):
