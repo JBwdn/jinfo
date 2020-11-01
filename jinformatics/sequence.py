@@ -1,62 +1,66 @@
-import primer3
+class BaseSeq:
+    """
+    Base class for DNA/RNA/AA sequence objects
+    """
 
-class WrongSequenceType(Exception):
-    """
-    Error for creating a sequence of the wrong type based on its bases
-    """
-    pass
+    def __init__(self, sequence: str = ""):
+        self.seq = sequence
+        self.len = len(sequence)
+        return
 
-
-class BaseSequence:
-    """
-    Base class for Sequence objects
-    """
-    def __init__(self, sequence: str):
+    def update_seq(self, sequence: str = ""):
         self.seq = sequence
         self.len = len(sequence)
         return
 
 
-class NucSequence(BaseSequence):
+class NucSeq(BaseSeq):
     """
     Base class for nucleotide sequences
     """
+
     def tm(self):
         return
 
 
-class DNASequence(NucSequence):
+class DNASeq(NucSeq):
     """
     Class to hold sequences of DNA
     """
+
     def transcribe(self):
         return
 
     def translate(self):
         return
 
-    def reverse_complement():
+    def reverse_complement(self):
         return
 
-    def MW():
+    def MW(self):
+        return
+
+    def GC(self):
         return
 
 
-class RNASequence(NucSequence):
+class RNASeq(NucSeq):
     """
     Class to hold RNA sequences
     """
-    def reverse_transcribe():
+
+    def reverse_transcribe(self):
         return
 
-    def translate():
+    def translate(self):
         return
 
 
-class AASequence(BaseSequence):
+class AASeq(BaseSeq):
     """
     Class to hold amino acid sequences
     """
+
     def MW(self):
         return
 
