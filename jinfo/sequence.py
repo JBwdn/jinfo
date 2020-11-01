@@ -104,7 +104,10 @@ class RNASeq(BaseSeq):
         return
 
     def reverse_transcribe(self):
-        return
+        """
+        Returns: DNA template of the RNA sequence
+        """
+        return self.seq.replace("U", "T")
 
     def translate(self):
         """
