@@ -2,6 +2,7 @@ def one_hot_dna(input_seq_str: str, max_seq_len: int):
     """
     One hot encode a string format dna sequence.
     Add zero padding up to the maximum length.
+    Returns: 1D numpy array of length 4*max_seq_len
     """
     import numpy as np
 
@@ -20,6 +21,10 @@ def one_hot_dna(input_seq_str: str, max_seq_len: int):
 
 
 def random_dna(seq_length: int) -> str:
+    """
+    Generate a random DNA sequence for primer design
+    Returns: String of length seq_length
+    """
     import random
 
     dna_base_list = ["A", "T", "C", "G"]
@@ -28,6 +33,10 @@ def random_dna(seq_length: int) -> str:
 
 
 def DNASeq_from_NCBI():
+    """
+    Fetch a DNA sequence using the NCBI Entrez api
+    Returns ji.DNASeq object
+    """
     return
 
 
