@@ -110,7 +110,7 @@ class RNASeq(BaseSeq):
         if len(self.seq) % 3 != 0:
             raise SeqLengthError("Seq cannot be split into codons, not a multiple of 3")
         codon_list = [self.seq[i : i + 3] for i in range(0, len(self.seq), 3)]
-        return "".join([codon_table[codon] for codon in codon_list])
+        return "".join([CODON_TABLE[codon] for codon in codon_list])
 
 
 class AASeq(BaseSeq):
