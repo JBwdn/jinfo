@@ -1,4 +1,11 @@
-from jinfo.tables import DNA_VOCAB, RNA_VOCAB, AA_VOCAB, CODON_TABLE, RC_TABLE
+from jinfo.tables import (
+    DNA_VOCAB,
+    RNA_VOCAB,
+    AA_VOCAB,
+    CODON_TABLE,
+    RC_TABLE,
+    DNA_MW_TABLE,
+)
 
 
 class SeqVocabError(Exception):
@@ -78,19 +85,25 @@ class DNASeq(BaseSeq):
         return
 
     def MW(self):
-        return
+        """
+        Calculate MW of double stranded DNA
+        Returns: Molecular weight float
+        """
+        fw_mw = sum([DNA_MW_TABLE[base] for base in self.seq]) + 17.01
+        rv_mw = sum([DNA_MW_TABLE[base] for base in self.reverse_complement()]) + 17.01
+        return fw_mw + rv_mw
 
     def GC(self, dp: int = 2):
         """
         Calculate the GC% of the DNA sequence with optional arg to control precision
-        Returns: GC percentage
+        Returns: GC percentage float
         """
         return round((self.seq.count("C") + self.seq.count("G")) / self.len, dp)
 
     def tm(self, dp: int = 2):
         """
         Calculate DNA sequence tm with optional arg to control precision
-        Returns: melting temperature
+        Returns: melting temperature float
         """
         import primer3
 

@@ -94,5 +94,7 @@ CODON_TABLE = {
 
 RC_TABLE = {"A": "T", "T": "A", "C": "G", "G": "C"}
 
+DNA_MW_TABLE = {"A": 313.21, "T": 304.2, "C": 289.18, "G": 329.21}
+
 if __name__ == "__main__":
     pass
