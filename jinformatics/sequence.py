@@ -1,4 +1,4 @@
-from tables import DNA_VOCAB, RNA_VOCAB, AA_VOCAB, CODON_TABLE
+from jinformatics.tables import DNA_VOCAB, RNA_VOCAB, AA_VOCAB, CODON_TABLE
 
 
 class SeqVocabError(Exception):
