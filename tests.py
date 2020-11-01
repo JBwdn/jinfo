@@ -13,7 +13,7 @@ class TestDNASeq(unittest.TestCase):
 
         self.dna_obj.update_seq("ATATAT")
         self.assertEqual(self.dna_obj.seq, "ATATAT", "Test DNASeq update_seq method")
-        self.assertEqual(self.dna_obj.transcribe(), None)
+        self.assertEqual(self.dna_obj.transcribe(), "AUAUAU")
 
 
 if __name__ == "__main__":
