@@ -36,7 +36,7 @@ class BaseSeq:
 
     def __init__(self, sequence: str = "", vocab: set = None):
         self.vocab = vocab
-        self.update_seq(sequence)
+        self.update_seq(sequence.upper())
         self.len = len(self.seq)
         return
 
@@ -73,19 +73,35 @@ class DNASeq(BaseSeq):
         return
 
     def transcribe(self):
-        return
+        """
+        Returns: the transcript of the DNA sequence
+        """
+        return self.seq.replace("T", "U")
 
     def translate(self):
+        """
+        Returns: the translated protein sequence of the DNA sequence
+        """
+        transcript = self.transcribe()
+
         return
 
     def reverse_complement(self):
         return
 
+    def find_CDS(self):
+        return
+
     def MW(self):
         return
 
-    def GC(self):
-        return
+    def GC(self, dp: int = 2):
+        """
+        Calculate the %GC of the DNA sequence
+        Optional arg to control precision
+        Returns: GC percentage
+        """
+        return round((self.seq.count("C") + self.seq.count("G")) / self.len, dp)
 
     def tm(self):
         return
