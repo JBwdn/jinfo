@@ -11,7 +11,7 @@ def one_hot_dna(input_seq_str: str, max_seq_len: int):
         "T": [0, 1, 0, 0],
         "C": [0, 0, 1, 0],
         "G": [0, 0, 0, 1],
-        "X": [0, 0, 0, 0]
+        "X": [0, 0, 0, 0],
     }
     input_seq_upper = input_seq_str.upper()
     padding = "".join(["X" for i in range(max_seq_len - len(input_seq_str))])
@@ -21,9 +21,15 @@ def one_hot_dna(input_seq_str: str, max_seq_len: int):
 
 
 def random_dna(seq_length: int) -> str:
+    import random
+
     dna_base_list = ["A", "T", "C", "G"]
     seq_list = [random.choice(dna_base_list) for i in range(seq_length)]
     return "".join(seq_list)
+
+
+def DNASeq_from_NCBI():
+    return
 
 
 if __name__ == "__main__":
