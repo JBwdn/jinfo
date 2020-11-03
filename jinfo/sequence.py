@@ -65,6 +65,22 @@ class BaseSeq:
 
         return multialign([self, seq2], maxiters=maxiters)
 
+    def save_fasta(self, file_name: str):
+        """
+        Save sequence to fasta file
+        """
+        import textwrap
+
+        seq_formatted = textwrap.fill(self.seq, width=80)
+        if self.label == "":
+            out_label = "jinfo_sequence"
+        else:
+            out_label = self.label
+
+        with open(file_name, "w") as text_file:
+            text_file.write(f">{out_label}\n{seq_formatted}")
+        return
+
 
 class DNASeq(BaseSeq):
     """

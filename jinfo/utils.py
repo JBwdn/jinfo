@@ -2,6 +2,10 @@ class MuscleNotInstalledError(Exception):
     pass
 
 
+class FastTree2NotInstalledError(Exception):
+    pass
+
+
 def one_hot_dna(input_seq_str: str, max_seq_len: int):
     """
     One hot encode a string format dna sequence.
@@ -153,12 +157,44 @@ def multialign(seq_list: list, maxiters: int = 16):
     bash_cmd = f"muscle -in {in_path} -out {out_path} -quiet -maxiters {maxiters}".split(
         sep=" "
     )
-    subprocess.run(bash_cmd)
+    subprocess.run(bash_cmd, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
 
     alignment_obj = alignment_from_fasta(out_path)
     cleanup_cmd = f"rm {in_path} {out_path}".split(sep=" ")
     subprocess.run(cleanup_cmd)
     return alignment_obj
+
+
+def calc_phylo_tree(alignment_obj):
+    """
+    Calculate a Newick format phylogenetic tree from an alignment object
+    ***Requires FastTree2 package***
+    Returns: Tree object
+    """
+    import subprocess
+    from jinfo.utils import seq_list_to_fasta
+    from jinfo.phylogenetics import PhyloTree
+
+    try:
+        test_cmd = "FastTreeMP".split(" ")
+        subprocess.run(test_cmd, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+    except FileNotFoundError:
+        raise FastTree2NotInstalledError
+
+    in_path = "temp.fasta"
+    out_path = "temp.tree"
+    seq_list_to_fasta(seq_list=alignment_obj.seqs, file_name=in_path)
+
+    bash_cmd = f"FastTreeMP {in_path}".split(sep=" ")
+    with open(out_path, "w") as text_file:
+        subprocess.run(bash_cmd, stdout=text_file)
+
+    with open(out_path, "r") as text_file:
+        tree_obj = PhyloTree(text_file.read())
+
+    cleanup_cmd = f"rm {in_path} {out_path}".split(sep=" ")
+    subprocess.run(cleanup_cmd)
+    return tree_obj
 
 
 if __name__ == "__main__":

@@ -1,19 +1,24 @@
-# jinfo
+# jinfo v0.13
 Extensible bio/informatics library for hackers
 https://pypi.org/project/jinfo/
 
 ### Objects:
-- DNASeq
-- RNASeq
-- AASeq
+- Sequences: BaseSeq, DNASeq, RNASeq, AASeq
+- Alignments: BaseAlign
+- Phylogenetic Trees: PhyloTree
 
 ### Functions:
 - one_hot_dna
 - random_dna
 - DNASeq_from_NCBI
+- seq_list_to_fasta
+- seq_from_fasta
+- seq_list_from_fasta
+- alignment_from_fasta
+- multialign
+- calc_phylo_tree
 
 ### Admin TODO:
-- prod branch for pypi release versions
 - Pypi description
 - documentation
 
@@ -21,11 +26,10 @@ https://pypi.org/project/jinfo/
 - DNASeq.find_CDS()
 - DNASeq_from_NCBI()
 - bring one_hot_dna and random_dna in line with rest of package
-- alignments classes? functions?
-- Phylogenetics
-- chemical/metabolite class
-- Tests for all seq methods
+- chemical/metabolite class(s)
+- Tests coverage
 - NCBI, ChEBI, BiGG databast interfaces
 - AASeq methods?
-- how to declaire primer3 import? probs on DNASeq load rather than .tm()
 - hmmer bindings
+- tree methods
+- fix alignment __str__

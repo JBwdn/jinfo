@@ -30,6 +30,29 @@ class BaseAlignment:
             raise StopIteration
 
     def __str__(self):
-        return "\n".join([f"{seq_obj.label}\t{seq_obj.seq}" for seq_obj in self.seqs])
+        import textwrap
+
+        seq_str_rows = [
+            textwrap.fill(seq_obj.seq, width=80).split("\n") for seq_obj in self.seqs
+        ]
+        str_out = ""
+        for i in range(len(seq_str_rows)):
+            str_out += f"{self.labels[i]}:\n"
+            for j in range(len(seq_str_rows[i])):
+                str_out += f"{seq_str_rows[i][j]}\n"
+
+            str_out += "\n"
+
+        return str_out
+
+    def calc_tree(self):
+        """
+        Calculate a phylogenetic tree from the alignment
+        ***Requires FastTree2 package***
+        Returns: Tree object
+        """
+        from jinfo.utils import calc_phylo_tree
+
+        return calc_phylo_tree(self)
 
     pass
