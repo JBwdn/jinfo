@@ -42,8 +42,26 @@ def DNASeq_from_NCBI():
     return
 
 
-def seq_list_to_fasta(seq_list: list, filename: str):
-    return
+def seq_list_to_fasta(
+    seq_list: list, file_name: str = None, label_list: list = None
+) -> str:
+    """
+    Covnert a list of Seq objects to a fasta format string
+    Optionally add labels and save to file
+    Returns: fasta string
+    """
+    fasta_str = ""
+    for i, seq_obj in enumerate(seq_list):
+        if label_list:
+            label = label_list[i]
+        else:
+            label = f"Sequence_{i}"
+        fasta_str += f">{label}\n{seq_obj.seq}\n\n"
+
+    if file_name:
+        with open(file=file_name, mode="w") as text_file:
+            text_file.write(fasta_str)
+    return fasta_str
 
 
 def seq_list_from_fasta(seq_list: list, filename: str):

@@ -130,17 +130,17 @@ class DNASeq(BaseSeq):
         import subprocess
         from jinfo.utils import seq_list_to_fasta, alignment_from_fasta
 
-        in_path = "temp.fasta"
-        out_path = "temp2.fasta"
-        seq_list_to_fasta(seq_list=[self, seq2], filename=in_path)
+        in_path = "_temp.fasta"
+        out_path = "_temp2.fasta"
+        seq_list_to_fasta(seq_list=[self, seq2], file_name=in_path)
         bash_cmd = f"muscle -in {in_path} -out {out_path} -quiet -maxiters {maxiters}".split(
             sep=" "
         )
         subprocess.run(bash_cmd)
-        alignment_obj = alignment_from_fasta(out_path)
+        # alignment_obj = alignment_from_fasta(out_path)
         cleanup_cmd = f"rm {in_path} {out_path}".split(sep=" ")
         subprocess.run(cleanup_cmd)
-        return alignment_obj
+        return
 
     def malign(self):
         """
