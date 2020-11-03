@@ -37,6 +37,9 @@ class BaseSeq:
         self.len = len(self.seq)
         return
 
+    def __str__(self):
+        return f"{self.label}\t{self.seq}"
+
     def check_seq_valid(self):
         """
         Ensure that the sequence string is consistant with the vocab
@@ -62,11 +65,11 @@ class DNASeq(BaseSeq):
     Class to hold sequences of DNA
     """
 
-    def __init__(self, sequence: str = ""):
+    def __init__(self, sequence: str = "", label: str = ""):
         """
         Call the superclass constructor with new default vocab argument
         """
-        super(DNASeq, self).__init__(sequence=sequence, vocab=DNA_VOCAB)
+        super(DNASeq, self).__init__(sequence=sequence, label=label, vocab=DNA_VOCAB)
         return
 
     def transcribe(self):
@@ -138,10 +141,10 @@ class DNASeq(BaseSeq):
             sep=" "
         )
         subprocess.run(bash_cmd)
-        # alignment_obj = alignment_from_fasta(out_path)
+        alignment_obj = alignment_from_fasta(out_path)
         cleanup_cmd = f"rm {in_path} {out_path}".split(sep=" ")
         subprocess.run(cleanup_cmd)
-        return
+        return alignment_obj
 
 
 class RNASeq(BaseSeq):
@@ -149,11 +152,11 @@ class RNASeq(BaseSeq):
     Class to hold RNA sequences
     """
 
-    def __init__(self, sequence: str = ""):
+    def __init__(self, sequence: str = "", label: str = ""):
         """
         Call the superclass constructor with new default vocab argument
         """
-        super(RNASeq, self).__init__(sequence=sequence, vocab=RNA_VOCAB)
+        super(RNASeq, self).__init__(sequence=sequence, label=label, vocab=RNA_VOCAB)
         return
 
     def reverse_transcribe(self):
@@ -186,11 +189,11 @@ class AASeq(BaseSeq):
     Class to hold amino acid sequences
     """
 
-    def __init__(self, sequence: str = ""):
+    def __init__(self, sequence: str = "", label: str = ""):
         """
         Call the superclass constructor with new default vocab argument
         """
-        super(AASeq, self).__init__(sequence=sequence, vocab=AA_VOCAB)
+        super(AASeq, self).__init__(sequence=sequence, label=label, vocab=AA_VOCAB)
         return
 
     def MW(self):

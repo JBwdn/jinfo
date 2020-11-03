@@ -21,7 +21,6 @@ https://pypi.org/project/jinfo/
 - DNASeq.find_CDS()
 - DNASeq_from_NCBI()
 - bring one_hot_dna and random_dna in line with rest of package
-- print functions for seq classes
 - alignments classes? functions?
 - Phylogenetics
 - chemical/metabolite class

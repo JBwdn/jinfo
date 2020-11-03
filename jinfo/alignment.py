@@ -29,4 +29,7 @@ class BaseAlignment:
         else:
             raise StopIteration
 
+    def __str__(self):
+        return "\n".join([f"{seq_obj.label}\t{seq_obj.seq}" for seq_obj in self.seqs])
+
     pass

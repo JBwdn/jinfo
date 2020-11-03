@@ -54,6 +54,8 @@ def seq_list_to_fasta(
     for i, seq_obj in enumerate(seq_list):
         if label_list:
             label = label_list[i]
+        elif seq_obj.label != "":
+            label = seq_obj.label
         else:
             label = f"Sequence_{i}"
         fasta_str += f">{label}\n{seq_obj.seq}\n\n"
@@ -101,7 +103,8 @@ def alignment_from_fasta(file_path: str):
     return BaseAlignment(aligned_sequences=seq_list)
 
 
-def multiple_alignment():
+def multiple_alignment(seq_list: list):
+
     return
 
 
