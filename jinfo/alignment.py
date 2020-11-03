@@ -32,4 +32,12 @@ class BaseAlignment:
     def __str__(self):
         return "\n".join([f"{seq_obj.label}\t{seq_obj.seq}" for seq_obj in self.seqs])
 
+    def calc_tree(self):
+        """
+        
+        """
+        from jinfo.utils import calc_phylo_tree
+
+        return calc_phylo_tree(self)
+
     pass
