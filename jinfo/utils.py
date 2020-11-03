@@ -70,7 +70,7 @@ def seq_list_to_fasta(
     return fasta_str
 
 
-def seq_from_fasta(file_path: str, seq_type: object = None):
+def seq_from_fasta(file_path: str, seq_type=None):
     """
     Parse a fasta file
     Returns specified type of Seq object
@@ -91,7 +91,7 @@ def seq_from_fasta(file_path: str, seq_type: object = None):
         return seq_type(sequence=seq_string, label=label)
 
 
-def seq_list_from_fasta(file_path: str, seq_type: object = None) -> list:
+def seq_list_from_fasta(file_path: str, seq_type=None) -> list:
     """
     Parse a multifasta file
     Returns list of BaseSeq objects
