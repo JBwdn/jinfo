@@ -77,8 +77,8 @@ class BaseSeq:
         else:
             out_label = self.label
 
-        with open(file_name, "w"):
-            file_name.write(f">{out_label}\n{seq_formatted}")
+        with open(file_name, "w") as text_file:
+            text_file.write(f">{out_label}\n{seq_formatted}")
         return
 
 
