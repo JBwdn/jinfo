@@ -173,7 +173,7 @@ def calc_phylo_tree(alignment_obj):
     """
     import subprocess
     from jinfo.utils import seq_list_to_fasta
-    from jinfo.phylogenetics import Tree
+    from jinfo.phylogenetics import PhyloTree
 
     try:
         test_cmd = "FastTreeMP".split(" ")
@@ -190,7 +190,7 @@ def calc_phylo_tree(alignment_obj):
         subprocess.run(bash_cmd, stdout=text_file)
 
     with open(out_path, "r") as text_file:
-        tree_obj = Tree(text_file.read())
+        tree_obj = PhyloTree(text_file.read())
 
     cleanup_cmd = f"rm {in_path} {out_path}".split(sep=" ")
     subprocess.run(cleanup_cmd)

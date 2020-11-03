@@ -1,4 +1,4 @@
-class Tree:
+class PhyloTree:
     def __init__(self, tree_Newick: str = None):
         self.tree = str(tree_Newick)
         return
