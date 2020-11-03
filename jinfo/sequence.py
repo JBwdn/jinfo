@@ -123,7 +123,7 @@ class DNASeq(BaseSeq):
     def to_fasta(self, filename: str, label: str):
         return
 
-    def align(self, seq2: DNASeq, maxiters: int = 16):
+    def align(self, seq2, maxiters: int = 16):
         """
         Perform sequence alignment
         """
@@ -133,10 +133,8 @@ class DNASeq(BaseSeq):
         in_path = "temp.fasta"
         out_path = "temp2.fasta"
         seq_list_to_fasta(seq_list=[self, seq2], filename=in_path)
-        bash_cmd = (
-            f"muscle -in {in_path} -out {out_path} -quiet -maxiters {maxiters}".split(
-                sep=" "
-            )
+        bash_cmd = f"muscle -in {in_path} -out {out_path} -quiet -maxiters {maxiters}".split(
+            sep=" "
         )
         subprocess.run(bash_cmd)
         alignment_obj = alignment_from_fasta(out_path)

@@ -29,3 +29,4 @@ https://pypi.org/project/jinfo/
 - NCBI, ChEBI, BiGG databast interfaces
 - AASeq methods?
 - how to declaire primer3 import? probs on DNASeq load rather than .tm()
+- hmmer bindings
