@@ -103,9 +103,26 @@ def alignment_from_fasta(file_path: str):
     return BaseAlignment(aligned_sequences=seq_list)
 
 
-def multiple_alignment(seq_list: list):
+def multialign(seq_list: list, maxiters: int = 16):
+    """
+    Perform multiple sequence alignment, optionally control the number of iterations
+    ***Requires MUSCLE package***
+    Returns Alignment object
+    """
+    import subprocess
+    from jinfo.utils import seq_list_to_fasta, alignment_from_fasta
 
-    return
+    in_path = "_temp.fasta"
+    out_path = "_temp2.fasta"
+    seq_list_to_fasta(seq_list=seq_list, file_name=in_path)
+    bash_cmd = f"muscle -in {in_path} -out {out_path} -quiet -maxiters {maxiters}".split(
+        sep=" "
+    )
+    subprocess.run(bash_cmd)
+    alignment_obj = alignment_from_fasta(out_path)
+    cleanup_cmd = f"rm {in_path} {out_path}".split(sep=" ")
+    subprocess.run(cleanup_cmd)
+    return alignment_obj
 
 
 if __name__ == "__main__":

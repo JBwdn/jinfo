@@ -7,6 +7,7 @@ from .utils import (
     DNASeq_from_NCBI,
     seq_list_to_fasta,
     alignment_from_fasta,
+    multialign,
 )
 from .tables import DNA_VOCAB, RNA_VOCAB, AA_VOCAB, CODON_TABLE
 from .alignment import BaseAlignment
