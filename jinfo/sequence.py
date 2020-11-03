@@ -26,11 +26,15 @@ class BaseSeq:
     Parent class for DNA/RNA/AA sequence objects
     """
 
-    def __init__(self, sequence: str = "", vocab: set = None):
+    def __init__(self, sequence: str = "", label: str = "", vocab: set = None):
         self.vocab = vocab
+        self.label = label
         self.update_seq(sequence.upper())
         self.len = len(self.seq)
         return
+
+    def __str__(self):
+        return f"{self.label}\t{self.seq}"
 
     def check_seq_valid(self):
         """
@@ -51,17 +55,27 @@ class BaseSeq:
         self.len = len(sequence)
         return
 
+    def align(self, seq2, maxiters: int = 16):
+        """
+        Perform sequence alignment of two sequences, optionally control the number of iterations
+        ***Requires MUSCLE package***
+        Returns Alignment object
+        """
+        from jinfo.utils import multialign
+
+        return multialign([self, seq2], maxiters=maxiters)
+
 
 class DNASeq(BaseSeq):
     """
     Class to hold sequences of DNA
     """
 
-    def __init__(self, sequence: str = ""):
+    def __init__(self, sequence: str = "", label: str = ""):
         """
         Call the superclass constructor with new default vocab argument
         """
-        super(DNASeq, self).__init__(sequence=sequence, vocab=DNA_VOCAB)
+        super(DNASeq, self).__init__(sequence=sequence, label=label, vocab=DNA_VOCAB)
         return
 
     def transcribe(self):
@@ -116,17 +130,20 @@ class DNASeq(BaseSeq):
 
         return round(primer3.calcTm(self.seq), dp)
 
+    def to_fasta(self, filename: str, label: str = None):
+        return
+
 
 class RNASeq(BaseSeq):
     """
     Class to hold RNA sequences
     """
 
-    def __init__(self, sequence: str = ""):
+    def __init__(self, sequence: str = "", label: str = ""):
         """
         Call the superclass constructor with new default vocab argument
         """
-        super(RNASeq, self).__init__(sequence=sequence, vocab=RNA_VOCAB)
+        super(RNASeq, self).__init__(sequence=sequence, label=label, vocab=RNA_VOCAB)
         return
 
     def reverse_transcribe(self):
@@ -159,11 +176,11 @@ class AASeq(BaseSeq):
     Class to hold amino acid sequences
     """
 
-    def __init__(self, sequence: str = ""):
+    def __init__(self, sequence: str = "", label: str = ""):
         """
         Call the superclass constructor with new default vocab argument
         """
-        super(AASeq, self).__init__(sequence=sequence, vocab=AA_VOCAB)
+        super(AASeq, self).__init__(sequence=sequence, label=label, vocab=AA_VOCAB)
         return
 
     def MW(self):

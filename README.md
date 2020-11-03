@@ -1,24 +1,31 @@
 # jinfo
 Extensible bio/informatics library for hackers
+https://pypi.org/project/jinfo/
 
+### Objects:
+- DNASeq
+- RNASeq
+- AASeq
 
-Objects:
-- DNASeq, RNASeq and AASeq
+### Functions:
+- one_hot_dna
+- random_dna
+- DNASeq_from_NCBI
 
-Functions:
-- one_hot_dna, random_dna, DNASeq_from_NCBI
+### Admin TODO:
+- prod branch for pypi release versions
+- Pypi description
+- documentation
 
-
-TODO:
+### Features TODO:
 - DNASeq.find_CDS()
 - DNASeq_from_NCBI()
-
-
-NOTES:
-Python package structure:
-- define classes and functions to their own files
-- add import statements to the __init__.py file
-- then can import all/selected classes using import jinformatics
-
-Python packaging reference:
-https://python-packaging.readthedocs.io/en/latest/minimal.html
+- bring one_hot_dna and random_dna in line with rest of package
+- alignments classes? functions?
+- Phylogenetics
+- chemical/metabolite class
+- Tests for all seq methods
+- NCBI, ChEBI, BiGG databast interfaces
+- AASeq methods?
+- how to declaire primer3 import? probs on DNASeq load rather than .tm()
+- hmmer bindings
