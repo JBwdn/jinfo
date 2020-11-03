@@ -1,3 +1,7 @@
+class MuscleNotInstalledError(Exception):
+    pass
+
+
 def one_hot_dna(input_seq_str: str, max_seq_len: int):
     """
     One hot encode a string format dna sequence.
@@ -66,6 +70,27 @@ def seq_list_to_fasta(
     return fasta_str
 
 
+def seq_from_fasta(file_path: str, seq_type: object = None):
+    """
+    Parse a fasta file
+    Returns specified type of Seq object
+    """
+    import re
+    from jinfo.sequence import BaseSeq, DNASeq, RNASeq, AASeq
+
+    with open(file_path, "r") as text_file:
+        fasta_str = text_file.read()
+
+    label = re.findall(r"^>(.*)", fasta_str)[0]
+    fasta_lines = fasta_str.split("\n")
+    label_index = fasta_lines.index(">" + label)
+    seq_string = "".join(fasta_lines[label_index + 1 :])
+    if seq_type is None:
+        return BaseSeq(sequence=seq_string, label=label)
+    else:
+        return seq_type(sequence=seq_string, label=label)
+
+
 def seq_list_from_fasta(file_path: str) -> list:
     """
     Parse a multifasta file
@@ -112,6 +137,12 @@ def multialign(seq_list: list, maxiters: int = 16):
     import subprocess
     from jinfo.utils import seq_list_to_fasta, alignment_from_fasta
 
+    try:
+        test_cmd = "muscle -quiet".split(" ")
+        subprocess.run(test_cmd, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+    except FileNotFoundError:
+        raise MuscleNotInstalledError
+
     in_path = "_temp.fasta"
     out_path = "_temp2.fasta"
     seq_list_to_fasta(seq_list=seq_list, file_name=in_path)
@@ -119,6 +150,7 @@ def multialign(seq_list: list, maxiters: int = 16):
         sep=" "
     )
     subprocess.run(bash_cmd)
+
     alignment_obj = alignment_from_fasta(out_path)
     cleanup_cmd = f"rm {in_path} {out_path}".split(sep=" ")
     subprocess.run(cleanup_cmd)

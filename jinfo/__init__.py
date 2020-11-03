@@ -6,6 +6,8 @@ from .utils import (
     random_dna,
     DNASeq_from_NCBI,
     seq_list_to_fasta,
+    seq_list_from_fasta,
+    seq_from_fasta,
     alignment_from_fasta,
     multialign,
 )

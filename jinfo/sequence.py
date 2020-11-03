@@ -21,10 +21,6 @@ class UnknownBaseError(Exception):
     pass
 
 
-class MuscleNotInstalledError(Exception):
-    pass
-
-
 class BaseSeq:
     """
     Parent class for DNA/RNA/AA sequence objects
@@ -58,6 +54,16 @@ class BaseSeq:
         self.seq = sequence
         self.len = len(sequence)
         return
+
+    def align(self, seq2, maxiters: int = 16):
+        """
+        Perform sequence alignment of two sequences, optionally control the number of iterations
+        ***Requires MUSCLE package***
+        Returns Alignment object
+        """
+        from jinfo.utils import multialign
+
+        return multialign([self, seq2], maxiters=maxiters)
 
 
 class DNASeq(BaseSeq):
@@ -126,16 +132,6 @@ class DNASeq(BaseSeq):
 
     def to_fasta(self, filename: str, label: str = None):
         return
-
-    def align(self, seq2, maxiters: int = 16):
-        """
-        Perform sequence alignment of two sequences, optionally control the number of iterations
-        ***Requires MUSCLE package***
-        Returns Alignment object
-        """
-        from jinfo.utils import multialign
-
-        return multialign([self, seq2], maxiters=maxiters)
 
 
 class RNASeq(BaseSeq):
