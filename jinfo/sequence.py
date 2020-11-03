@@ -21,6 +21,10 @@ class UnknownBaseError(Exception):
     pass
 
 
+class MuscleNotInstalledError(Exception):
+    pass
+
+
 class BaseSeq:
     """
     Parent class for DNA/RNA/AA sequence objects
@@ -115,6 +119,36 @@ class DNASeq(BaseSeq):
         import primer3
 
         return round(primer3.calcTm(self.seq), dp)
+
+    def to_fasta(self, filename: str, label: str):
+        return
+
+    def align(self, seq2: DNASeq, maxiters: int = 16):
+        """
+        Perform sequence alignment
+        """
+        import subprocess
+        from jinfo.utils import seq_list_to_fasta, alignment_from_fasta
+
+        in_path = "temp.fasta"
+        out_path = "temp2.fasta"
+        seq_list_to_fasta(seq_list=[self, seq2], filename=in_path)
+        bash_cmd = (
+            f"muscle -in {in_path} -out {out_path} -quiet -maxiters {maxiters}".split(
+                sep=" "
+            )
+        )
+        subprocess.run(bash_cmd)
+        alignment_obj = alignment_from_fasta(out_path)
+        cleanup_cmd = f"rm {in_path} {out_path}".split(sep=" ")
+        subprocess.run(cleanup_cmd)
+        return alignment_obj
+
+    def malign(self):
+        """
+        Perform multiple sequence alignment
+        """
+        return
 
 
 class RNASeq(BaseSeq):

@@ -42,5 +42,19 @@ def DNASeq_from_NCBI():
     return
 
 
+def seq_list_to_fasta(seq_list: list, filename: str):
+    return
+
+
+def seq_list_from_fasta(seq_list: list, filename: str):
+    return
+
+
+def alignment_from_fasta(path: str):
+    from jinfo.alignment import alignment
+
+    return alignment()
+
+
 if __name__ == "__main__":
     pass
