@@ -91,7 +91,7 @@ def seq_from_fasta(file_path: str, seq_type: object = None):
         return seq_type(sequence=seq_string, label=label)
 
 
-def seq_list_from_fasta(file_path: str) -> list:
+def seq_list_from_fasta(file_path: str, seq_type: object = None) -> list:
     """
     Parse a multifasta file
     Returns list of BaseSeq objects
@@ -113,7 +113,11 @@ def seq_list_from_fasta(file_path: str) -> list:
         else:
             next_label_index = fasta_lines.index(">" + label_list[i + 1])
             seq_string = "".join(fasta_lines[label_index + 1 : next_label_index])
-        seq_list.append(BaseSeq(sequence=seq_string, label=label_list[i]))
+
+        if seq_type is None:
+            seq_list.append(BaseSeq(sequence=seq_string, label=label_list[i]))
+        else:
+            seq_list.append(seq_type(sequence=seq_string, label=label_list[i]))
     return seq_list
 
 
