@@ -64,14 +64,45 @@ def seq_list_to_fasta(
     return fasta_str
 
 
-def seq_list_from_fasta(seq_list: list, filename: str):
+def seq_list_from_fasta(file_path: str) -> list:
+    """
+    Parse a multifasta file
+    Returns list of BaseSeq objects
+    """
+    from jinfo.sequence import BaseSeq
+    import re
+
+    with open(file_path, "r") as text_file:
+        fasta_str = text_file.read()
+
+    label_list = re.findall(r"^>(.*)", fasta_str, re.MULTILINE)
+    fasta_lines = fasta_str.split("\n")
+    seq_list = []
+
+    for i in range(len(label_list)):
+        label_index = fasta_lines.index(">" + label_list[i])
+        if i == len(label_list) - 1:
+            seq_string = "".join(fasta_lines[label_index + 1 :])
+        else:
+            next_label_index = fasta_lines.index(">" + label_list[i + 1])
+            seq_string = "".join(fasta_lines[label_index + 1 : next_label_index])
+        seq_list.append(BaseSeq(sequence=seq_string, label=label_list[i]))
+    return seq_list
+
+
+def alignment_from_fasta(file_path: str):
+    """
+    Parse alignment from fasta file
+    Returns Alignment object
+    """
+    from jinfo.alignment import BaseAlignment
+
+    seq_list = seq_list_from_fasta(file_path=file_path)
+    return BaseAlignment(aligned_sequences=seq_list)
+
+
+def multiple_alignment():
     return
-
-
-def alignment_from_fasta(path: str):
-    from jinfo.alignment import alignment
-
-    return alignment()
 
 
 if __name__ == "__main__":

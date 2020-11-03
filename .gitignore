@@ -128,3 +128,5 @@ dmypy.json
 # Pyre type checker
 .pyre/
 jinfo/jinfo.egg-info
+function_tests_temp.py
+temp.fasta

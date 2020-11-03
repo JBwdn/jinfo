@@ -30,8 +30,9 @@ class BaseSeq:
     Parent class for DNA/RNA/AA sequence objects
     """
 
-    def __init__(self, sequence: str = "", vocab: set = None):
+    def __init__(self, sequence: str = "", label: str = "", vocab: set = None):
         self.vocab = vocab
+        self.label = label
         self.update_seq(sequence.upper())
         self.len = len(self.seq)
         return
@@ -120,7 +121,7 @@ class DNASeq(BaseSeq):
 
         return round(primer3.calcTm(self.seq), dp)
 
-    def to_fasta(self, filename: str, label: str):
+    def to_fasta(self, filename: str, label: str = None):
         return
 
     def align(self, seq2, maxiters: int = 16):
@@ -140,12 +141,6 @@ class DNASeq(BaseSeq):
         # alignment_obj = alignment_from_fasta(out_path)
         cleanup_cmd = f"rm {in_path} {out_path}".split(sep=" ")
         subprocess.run(cleanup_cmd)
-        return
-
-    def malign(self):
-        """
-        Perform multiple sequence alignment
-        """
         return
 
 
