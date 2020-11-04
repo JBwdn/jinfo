@@ -26,7 +26,7 @@ class BaseSeq:
     Parent class for DNA/RNA/AA sequence objects
     """
 
-    def __init__(self, sequence: str = "", label: str = "", vocab: set = None):
+    def __init__(self, sequence: str = "", label: str = "", vocab: set = None) -> None:
         self.vocab = vocab
         self.label = label
         self.update_seq(sequence.upper())
@@ -36,19 +36,21 @@ class BaseSeq:
     def __str__(self):
         return f"{self.label}\t{self.seq}"
 
-    def check_seq_valid(self):
+    def check_seq_valid(self) -> None:
         """
         Ensure that the sequence string is consistant with the vocab
         """
+
         if self.vocab is not None:
             if not self.vocab.issuperset(set(self.new_seq)):
                 raise SeqVocabError("Seq contains bases not in vocab")
         return
 
-    def update_seq(self, sequence: str = ""):
+    def update_seq(self, sequence: str = "") -> None:
         """
         Replace the sequence string with a new string
         """
+
         self.new_seq = sequence
         self.check_seq_valid()
         self.seq = sequence
@@ -57,18 +59,31 @@ class BaseSeq:
 
     def align(self, seq2, maxiters: int = 16):
         """
-        Perform sequence alignment of two sequences, optionally control the number of iterations
+        Perform alignment of two sequences, optionally control the number of iterations
+
         ***Requires MUSCLE package***
         Returns Alignment object
         """
+
         from jinfo.utils import multialign
 
         return multialign([self, seq2], maxiters=maxiters)
 
-    def save_fasta(self, file_name: str):
+    def identity(self, seq2) -> float:
+        """
+        Calculate the percentage identity between two sequences
+
+        Returns: float
+        """
+        from jinfo.utils import percentage_identity
+
+        return percentage_identity(self, seq2)
+
+    def save_fasta(self, file_name: str) -> None:
         """
         Save sequence to fasta file
         """
+
         import textwrap
 
         seq_formatted = textwrap.fill(self.seq, width=80)
@@ -87,61 +102,71 @@ class DNASeq(BaseSeq):
     Class to hold sequences of DNA
     """
 
-    def __init__(self, sequence: str = "", label: str = ""):
+    def __init__(self, sequence: str = "", label: str = "") -> None:
         """
         Call the superclass constructor with new default vocab argument
         """
+
         super(DNASeq, self).__init__(sequence=sequence, label=label, vocab=DNA_VOCAB)
         return
 
-    def transcribe(self):
+    def transcribe(self) -> str:
         """
         Returns: RNA transcript of the DNA sequence
         """
+
         return self.seq.replace("T", "U")
 
-    def translate(self):
+    def translate(self) -> str:
         """
         Returns: translated protein sequence of the DNA sequence
         """
+
         transcript = self.transcribe()
         if len(transcript) % 3 != 0:
             raise SeqLengthError("Seq cannot be split into codons, not a multiple of 3")
         codon_list = [transcript[i : i + 3] for i in range(0, len(transcript), 3)]
         return "".join([CODON_TABLE[codon] for codon in codon_list])
 
-    def reverse_complement(self):
+    def reverse_complement(self) -> str:
         """
         Returns: reverse complement of the DNA sequence
         """
+
         return "".join([RC_TABLE[base] for base in self.seq][::-1])
 
     def find_CDS(self):
         return
 
-    def MW(self):
+    def MW(self) -> float:
         """
         Calculate MW of linear double stranded DNA
+
         Returns: Molecular weight float
         """
+
         if "X" in self.seq:
             raise UnknownBaseError("X base in sequence")
         fw_mw = sum([NT_MW_TABLE[base] for base in self.seq]) + 17.01
         rv_mw = sum([NT_MW_TABLE[base] for base in self.reverse_complement()]) + 17.01
         return fw_mw + rv_mw
 
-    def GC(self, dp: int = 2):
+    def GC(self, dp: int = 2) -> float:
         """
         Calculate the GC% of the DNA sequence with optional arg to control precision
+
         Returns: GC percentage float
         """
+
         return round((self.seq.count("C") + self.seq.count("G")) / self.len, dp)
 
-    def tm(self, dp: int = 2):
+    def tm(self, dp: int = 2) -> float:
         """
         Calculate DNA sequence tm with optional arg to control precision
+
         Returns: melting temperature float
         """
+
         import primer3
 
         return round(primer3.calcTm(self.seq), dp)
@@ -155,33 +180,38 @@ class RNASeq(BaseSeq):
     Class to hold RNA sequences
     """
 
-    def __init__(self, sequence: str = "", label: str = ""):
+    def __init__(self, sequence: str = "", label: str = "") -> None:
         """
         Call the superclass constructor with new default vocab argument
         """
+
         super(RNASeq, self).__init__(sequence=sequence, label=label, vocab=RNA_VOCAB)
         return
 
-    def reverse_transcribe(self):
+    def reverse_transcribe(self) -> str:
         """
         Returns: DNA template of the RNA sequence
         """
+
         return self.seq.replace("U", "T")
 
-    def translate(self):
+    def translate(self) -> str:
         """
         Returns: the translated protein sequence of the DNA sequence
         """
+
         if len(self.seq) % 3 != 0:
             raise SeqLengthError("Seq cannot be split into codons, not a multiple of 3")
         codon_list = [self.seq[i : i + 3] for i in range(0, len(self.seq), 3)]
         return "".join([CODON_TABLE[codon] for codon in codon_list])
 
-    def MW(self):
+    def MW(self) -> float:
         """
         Calculate MW of single stranded RNA
+
         Returns: Molecular weight float
         """
+
         if "X" in self.seq:
             raise UnknownBaseError("X base in sequence")
         return sum([NT_MW_TABLE[base] for base in self.seq]) + 17.01
@@ -196,14 +226,17 @@ class AASeq(BaseSeq):
         """
         Call the superclass constructor with new default vocab argument
         """
+
         super(AASeq, self).__init__(sequence=sequence, label=label, vocab=AA_VOCAB)
         return
 
-    def MW(self):
+    def MW(self) -> float:
         """
         Calculate protein MW
+
         Returns: Molecular weight float
         """
+
         if "X" in self.seq:
             raise UnknownBaseError("X residue in sequence")
         return sum([AA_MW_TABLE[base] for base in self.seq])
