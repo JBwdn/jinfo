@@ -232,14 +232,17 @@ def calc_phylo_tree(alignment_obj):
     return tree_obj
 
 
-def remove_degenerate_seqs(seq_list: list, identity_limit: int):
+def remove_degenerate_seqs(alignment_obj, identity_limit: int):
     """
     Filter high similarity sequences from a list of Seq objects
+
+    Returns: BaseAlignment
     """
     import multiprocessing as mp
     from functools import partial
     from jinfo.alignment import BaseAlignment
 
+    seq_list = alignment_obj.seqs
     identity_array = []
     filtered_seqs = []
     pool = mp.Pool(mp.cpu_count())  # Set up cpu pool for parallel calculation

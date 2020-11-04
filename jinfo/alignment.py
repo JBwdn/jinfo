@@ -32,19 +32,9 @@ class BaseAlignment:
             raise StopIteration
 
     def __str__(self):
-        import textwrap
-
-        seq_str_rows = [
-            textwrap.fill(seq_obj.seq, width=80).split("\n") for seq_obj in self.seqs
-        ]
         str_out = ""
-        for i in range(len(seq_str_rows)):
-            str_out += f"{self.labels[i]}:\n"
-            for j in range(len(seq_str_rows[i])):
-                str_out += f"{seq_str_rows[i][j]}\n"
-
-            str_out += "\n"
-
+        for seq_obj in self.seqs:
+            str_out += f"{seq_obj.__str__}\n"
         return str_out
 
     def calc_tree(self):
@@ -69,6 +59,6 @@ class BaseAlignment:
 
         from jinfo.utils import remove_degenerate_seqs
 
-        return remove_degenerate_seqs(seq_list=self.seqs, identity_limit=identity_limit)
+        return remove_degenerate_seqs(alignment_obj=self, identity_limit=identity_limit)
 
     pass
