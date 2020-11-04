@@ -15,3 +15,4 @@ from .utils import (
 from .tables import DNA_VOCAB, RNA_VOCAB, AA_VOCAB, CODON_TABLE
 from .alignment import BaseAlignment
 from .phylogenetics import PhyloTree
+from .metabolite import Metabolite
