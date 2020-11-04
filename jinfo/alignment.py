@@ -6,7 +6,9 @@ class BaseAlignment:
     Iterator which holds sequence alignments and the respective sequence labels
     """
 
-    def __init__(self, aligned_sequences: list, labels: list = None, vocab: set = None):
+    def __init__(
+        self, aligned_sequences: list, labels: list = None, vocab: set = None
+    ) -> None:
         self.seqs = aligned_sequences
         self.seqs_str = [seq_obj.seq for seq_obj in self.seqs]
         self.vocab = vocab
@@ -56,5 +58,15 @@ class BaseAlignment:
         from jinfo.utils import calc_phylo_tree
 
         return calc_phylo_tree(self)
+
+    def remove_degenerate_seqs(self, identity_limit: int = 90):
+        """
+        Filter similar sequences from the alignment
+
+        Remove sequences form the alignment with percantage identity above a certain limit
+        Returns: filtered Alignment object
+        """
+
+        return
 
     pass

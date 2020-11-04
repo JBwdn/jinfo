@@ -150,6 +150,21 @@ def alignment_from_fasta(file_path: str):
     return BaseAlignment(aligned_sequences=seq_list)
 
 
+def percentage_identity(seq1, seq2, dp: int = 2) -> float:
+    """
+    Calculate pairwise sequence similarity from aligned sequences
+
+    Optionally control precision using dp argument
+    Returns: float
+    """
+    i = 0
+    for b1, b2 in zip(seq1.seq, seq2.seq):
+        if b1 == b2:
+            i += 1
+    pid = i * 100 / ((seq1.len + seq2.len) / 2)
+    return pid
+
+
 def multialign(seq_list: list, maxiters: int = 16):
     """
     Perform multiple sequence alignment, optionally control the number of iterations
