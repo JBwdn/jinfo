@@ -9,9 +9,11 @@ class FastTree2NotInstalledError(Exception):
 def one_hot_dna(input_seq_str: str, max_seq_len: int):
     """
     One hot encode a string format dna sequence.
+
     Add zero padding up to the maximum length.
     Returns: 1D numpy array of length 4*max_seq_len
     """
+
     import numpy as np
 
     encode_dict = {
@@ -31,8 +33,10 @@ def one_hot_dna(input_seq_str: str, max_seq_len: int):
 def random_dna(seq_length: int) -> str:
     """
     Generate a random DNA sequence for primer design
+
     Returns: String of length seq_length
     """
+
     import random
 
     dna_base_list = ["A", "T", "C", "G"]
@@ -43,8 +47,10 @@ def random_dna(seq_length: int) -> str:
 def DNASeq_from_NCBI():
     """
     Fetch a DNA sequence using the NCBI Entrez api
-    Returns ji.DNASeq object
+
+    Returns jinfo.DNASeq object
     """
+
     from jinfo.sequence import DNASeq
 
     return
@@ -55,9 +61,11 @@ def seq_list_to_fasta(
 ) -> str:
     """
     Covnert a list of Seq objects to a fasta format string
+
     Optionally add labels and save to file
     Returns: fasta string
     """
+
     fasta_str = ""
     for i, seq_obj in enumerate(seq_list):
         if label_list:
@@ -77,8 +85,10 @@ def seq_list_to_fasta(
 def seq_from_fasta(file_path: str, seq_type=None):
     """
     Parse a fasta file
+
     Returns specified type of Seq object
     """
+
     import re
     from jinfo.sequence import BaseSeq, DNASeq, RNASeq, AASeq
 
@@ -98,8 +108,10 @@ def seq_from_fasta(file_path: str, seq_type=None):
 def seq_list_from_fasta(file_path: str, seq_type=None) -> list:
     """
     Parse a multifasta file
+
     Returns list of BaseSeq objects
     """
+
     from jinfo.sequence import BaseSeq
     import re
 
@@ -128,8 +140,10 @@ def seq_list_from_fasta(file_path: str, seq_type=None) -> list:
 def alignment_from_fasta(file_path: str):
     """
     Parse alignment from fasta file
+
     Returns Alignment object
     """
+
     from jinfo.alignment import BaseAlignment
 
     seq_list = seq_list_from_fasta(file_path=file_path)
@@ -139,9 +153,11 @@ def alignment_from_fasta(file_path: str):
 def multialign(seq_list: list, maxiters: int = 16):
     """
     Perform multiple sequence alignment, optionally control the number of iterations
+
     ***Requires MUSCLE package***
     Returns Alignment object
     """
+
     import subprocess
     from jinfo.utils import seq_list_to_fasta, alignment_from_fasta
 
@@ -154,8 +170,10 @@ def multialign(seq_list: list, maxiters: int = 16):
     in_path = "_temp.fasta"
     out_path = "_temp2.fasta"
     seq_list_to_fasta(seq_list=seq_list, file_name=in_path)
-    bash_cmd = f"muscle -in {in_path} -out {out_path} -quiet -maxiters {maxiters}".split(
-        sep=" "
+    bash_cmd = (
+        f"muscle -in {in_path} -out {out_path} -quiet -maxiters {maxiters}".split(
+            sep=" "
+        )
     )
     subprocess.run(bash_cmd, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
 
@@ -168,9 +186,11 @@ def multialign(seq_list: list, maxiters: int = 16):
 def calc_phylo_tree(alignment_obj):
     """
     Calculate a Newick format phylogenetic tree from an alignment object
+
     ***Requires FastTree2 package***
     Returns: Tree object
     """
+
     import subprocess
     from jinfo.utils import seq_list_to_fasta
     from jinfo.phylogenetics import PhyloTree

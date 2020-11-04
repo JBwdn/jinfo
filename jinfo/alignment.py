@@ -48,9 +48,11 @@ class BaseAlignment:
     def calc_tree(self):
         """
         Calculate a phylogenetic tree from the alignment
+
         ***Requires FastTree2 package***
         Returns: Tree object
         """
+
         from jinfo.utils import calc_phylo_tree
 
         return calc_phylo_tree(self)

@@ -7,6 +7,7 @@ class PhyloTree:
         """
         Save the tree to a file in Newick format
         """
+
         with open(file_name, "w") as text_file:
             text_file.write(self.tree)
         return
