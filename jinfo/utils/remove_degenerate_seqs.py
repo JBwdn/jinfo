@@ -2,7 +2,7 @@ from jinfo.alignment import BaseAlignment
 
 
 def remove_degenerate_seqs(
-    alignment_obj: BaseAlignment, identity_limit: int
+    alignment_obj: BaseAlignment, identity_limit: int, show_id_array: bool = False
 ) -> BaseAlignment:
     """
     Filter high similarity sequences from a list of Seq objects
@@ -22,6 +22,11 @@ def remove_degenerate_seqs(
         id_partial = partial(percentage_identity, seq2=seq_obj)
         identity_array_row = pool.map(id_partial, seq_list)
         identity_array.append(identity_array_row)
+
+    if show_id_array:
+        print("Calculated alignment identity array:")
+        for i, row in enumerate(identity_array):
+            print(f"{seq_list[i].label}\t{row}")
 
     for i, row in enumerate(identity_array):
         row.remove(100)  # remove seq 100% match with itself

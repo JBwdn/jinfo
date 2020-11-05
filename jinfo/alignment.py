@@ -49,7 +49,7 @@ class BaseAlignment:
 
         return calc_phylo_tree(self)
 
-    def identity_filter(self, identity_limit: int = 90):
+    def identity_filter(self, identity_limit: int = 90, show_id_array: bool = False):
         """
         Filter similar sequences from the alignment
 
@@ -59,6 +59,10 @@ class BaseAlignment:
 
         from jinfo.utils.remove_degenerate_seqs import remove_degenerate_seqs
 
-        return remove_degenerate_seqs(alignment_obj=self, identity_limit=identity_limit)
+        return remove_degenerate_seqs(
+            alignment_obj=self,
+            identity_limit=identity_limit,
+            show_id_array=show_id_array,
+        )
 
     pass

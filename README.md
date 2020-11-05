@@ -35,3 +35,4 @@ https://pypi.org/project/jinfo/
 - hmmer bindings -> phmmer and nhmmer
 - tree methods
 - object type hint + annotation coverage
+- how to deal with "-" in percentage indentity?
