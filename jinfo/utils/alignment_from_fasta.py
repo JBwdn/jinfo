@@ -6,7 +6,7 @@ from jinfo.sequence import BaseSeq, DNASeq, RNASeq, AASeq
 ANY_SEQ = Union[BaseSeq, DNASeq, RNASeq, AASeq]
 
 
-def alignment_from_fasta(file_path: str, seq_type: Optional[ANY_SEQ]) -> BaseAlignment:
+def alignment_from_fasta(file_path: str, seq_obj: ANY_SEQ = BaseSeq) -> BaseAlignment:
     """
     Parse alignment from fasta file
 
@@ -15,7 +15,7 @@ def alignment_from_fasta(file_path: str, seq_type: Optional[ANY_SEQ]) -> BaseAli
 
     from jinfo.utils.seq_list_from_fasta import seq_list_from_fasta
 
-    seq_list = seq_list_from_fasta(file_path=file_path, seq_type=seq_type)
+    seq_list = seq_list_from_fasta(file_path=file_path, seq_obj=seq_obj)
     return BaseAlignment(aligned_sequences=seq_list)
 
 

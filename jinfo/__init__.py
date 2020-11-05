@@ -1,4 +1,4 @@
-from .sequence import DNASeq, RNASeq, AASeq
+from .sequence import BaseSeq, DNASeq, RNASeq, AASeq
 from .alignment import BaseAlignment
 from .phylogenetics import PhyloTree
 from .metabolite import BaseMetabolite

@@ -35,7 +35,7 @@ def multialign(seq_list: List[ALL_SEQS], maxiters: int = 16) -> BaseAlignment:
     )
     subprocess.run(bash_cmd, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
 
-    alignment_obj = alignment_from_fasta(out_path, seq_type=None)
+    alignment_obj = alignment_from_fasta(out_path, seq_obj=type(seq_list[0]))
     cleanup_cmd = f"rm {in_path} {out_path}".split(sep=" ")
     subprocess.run(cleanup_cmd)
     return alignment_obj
