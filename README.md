@@ -1,4 +1,4 @@
-# jinfo v0.13
+# jinfo v0.15
 Extensible bio/informatics library for hackers
 https://pypi.org/project/jinfo/
 
@@ -34,3 +34,4 @@ https://pypi.org/project/jinfo/
 - AASeq methods
 - hmmer bindings -> phmmer and nhmmer
 - tree methods
+- object type hint + annotation coverage
