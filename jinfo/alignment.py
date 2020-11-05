@@ -34,7 +34,7 @@ class BaseAlignment:
     def __str__(self):
         str_out = ""
         for seq_obj in self.seqs:
-            str_out += f"{seq_obj.__str__}\n"
+            str_out += f"{seq_obj}\n"
         return str_out
 
     def calc_tree(self):

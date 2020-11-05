@@ -29,13 +29,13 @@ def multialign(seq_list: List[ALL_SEQS], maxiters: int = 16) -> BaseAlignment:
 
     in_path = "_temp.fasta"
     out_path = "_temp2.fasta"
-    seq_list_to_fasta(seq_list=seq_list, file_name=in_path)
+    seq_list_to_fasta(seq_list=seq_list, file_name=in_path, label_list=None)
     bash_cmd = f"muscle -in {in_path} -out {out_path} -quiet -maxiters {maxiters}".split(
         sep=" "
     )
     subprocess.run(bash_cmd, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
 
-    alignment_obj = alignment_from_fasta(out_path)
+    alignment_obj = alignment_from_fasta(out_path, seq_type=None)
     cleanup_cmd = f"rm {in_path} {out_path}".split(sep=" ")
     subprocess.run(cleanup_cmd)
     return alignment_obj
