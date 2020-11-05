@@ -29,7 +29,7 @@ class BaseSeq:
     def __init__(self, sequence: str = "", label: str = "", vocab: set = None) -> None:
         self.vocab = vocab
         self.label = label
-        self.update_seq(sequence.upper())
+        self.update_seq(sequence)
         self.len = len(self.seq)
         return
 
@@ -51,10 +51,18 @@ class BaseSeq:
         Replace the sequence string with a new string
         """
 
-        self.new_seq = sequence
+        self.new_seq = sequence.upper()
         self.check_seq_valid()
-        self.seq = sequence
+        self.seq = self.new_seq
         self.len = len(sequence)
+        return
+
+    def update_label(self, label: str = "") -> None:
+        """
+        Replace the sequence string with a new string
+        """
+
+        self.label = label
         return
 
     def align(self, seq2, maxiters: int = 16):
@@ -65,7 +73,7 @@ class BaseSeq:
         Returns Alignment object
         """
 
-        from jinfo.utils import multialign
+        from jinfo.utils.multialign import multialign
 
         return multialign([self, seq2], maxiters=maxiters)
 
@@ -75,7 +83,7 @@ class BaseSeq:
 
         Returns: float
         """
-        from jinfo.utils import percentage_identity
+        from jinfo.utils.percentage_identity import percentage_identity
 
         return percentage_identity(self, seq2)
 
@@ -158,7 +166,7 @@ class DNASeq(BaseSeq):
         Returns: GC percentage float
         """
 
-        return round((self.seq.count("C") + self.seq.count("G")) / self.len, dp)
+        return round(100 * (self.seq.count("C") + self.seq.count("G")) / self.len, dp)
 
     def tm(self, dp: int = 2) -> float:
         """
@@ -171,8 +179,16 @@ class DNASeq(BaseSeq):
 
         return round(primer3.calcTm(self.seq), dp)
 
-    def to_fasta(self, filename: str, label: str = None):
-        return
+    def one_hot(self, max_len: int = None):
+        """
+        
+        """
+        from jinfo import one_hot_dna
+
+        if max_len:
+            return one_hot_dna(self, max_len)
+        else:
+            return one_hot_dna(self, self.len)
 
 
 class RNASeq(BaseSeq):

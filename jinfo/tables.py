@@ -1,5 +1,5 @@
-DNA_VOCAB = {"A", "T", "C", "G", "X"}
-RNA_VOCAB = {"A", "U", "C", "G", "X"}
+DNA_VOCAB = {"A", "T", "C", "G", "X", "-"}
+RNA_VOCAB = {"A", "U", "C", "G", "X", "-"}
 AA_VOCAB = {
     "G",
     "A",
@@ -22,6 +22,8 @@ AA_VOCAB = {
     "D",
     "T",
     "*",
+    "-",
+    "X",
 }
 
 CODON_TABLE = {

@@ -1,4 +1,4 @@
-# jinfo v0.13
+# jinfo v0.15
 Extensible bio/informatics library for hackers
 https://pypi.org/project/jinfo/
 
@@ -10,7 +10,7 @@ https://pypi.org/project/jinfo/
 
 ### Functions:
 - one_hot_dna
-- random_dna
+- random_DNASeq
 - DNASeq_from_NCBI
 - seq_list_to_fasta
 - seq_from_fasta
@@ -28,10 +28,11 @@ https://pypi.org/project/jinfo/
 ### Features TODO:
 - DNASeq.find_CDS()
 - DNASeq_from_NCBI()
-- bring one_hot_dna and random_dna in line with rest of package
 - metabolite methods
 - Tests coverage
 - NCBI, ChEBI, BiGG databast interfaces
 - AASeq methods
-- hmmer bindings
+- hmmer bindings -> phmmer and nhmmer
 - tree methods
+- object type hint + annotation coverage
+- how to deal with "-" in percentage indentity?

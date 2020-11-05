@@ -35,7 +35,7 @@ jobs:
           flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
       - name: Test with unittest
         run: |
-          python -m unittest
+          python -m unittest tests
       - name: Type check using mypy
         run: |
           mypy --ignore-missing-imports .

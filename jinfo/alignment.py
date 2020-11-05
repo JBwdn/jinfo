@@ -34,7 +34,7 @@ class BaseAlignment:
     def __str__(self):
         str_out = ""
         for seq_obj in self.seqs:
-            str_out += f"{seq_obj.__str__}\n"
+            str_out += f"{seq_obj}\n"
         return str_out
 
     def calc_tree(self):
@@ -45,11 +45,11 @@ class BaseAlignment:
         Returns: Tree object
         """
 
-        from jinfo.utils import calc_phylo_tree
+        from jinfo.utils.calc_phylo_tree import calc_phylo_tree
 
         return calc_phylo_tree(self)
 
-    def identity_filter(self, identity_limit: int = 90):
+    def identity_filter(self, identity_limit: int = 90, show_id_array: bool = False):
         """
         Filter similar sequences from the alignment
 
@@ -57,8 +57,12 @@ class BaseAlignment:
         Returns: filtered Alignment object
         """
 
-        from jinfo.utils import remove_degenerate_seqs
+        from jinfo.utils.remove_degenerate_seqs import remove_degenerate_seqs
 
-        return remove_degenerate_seqs(alignment_obj=self, identity_limit=identity_limit)
+        return remove_degenerate_seqs(
+            alignment_obj=self,
+            identity_limit=identity_limit,
+            show_id_array=show_id_array,
+        )
 
     pass
