@@ -1,1 +1,1 @@
-from .tests import TestDNASeq, TestRNASeq, TestAASeq
+from .sequence_tests import TestBaseSeq, TestDNASeq, TestRNASeq, TestAASeq

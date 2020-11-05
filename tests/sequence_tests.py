@@ -15,8 +15,6 @@ from jinfo.sequence import (
     SeqLengthError,
 )
 
-from numpy import array
-
 
 class TestBaseSeq(unittest.TestCase):
     def setUp(self):
