@@ -16,7 +16,7 @@ def percentage_identity(seq1: ALL_SEQS, seq2: ALL_SEQS, dp: int = 2) -> float:
         if b1 == b2:
             i += 1
     pid = i * 100 / ((seq1.len + seq2.len) / 2)
-    return pid
+    return round(pid, dp)
 
 
 if __name__ == "__main__":
