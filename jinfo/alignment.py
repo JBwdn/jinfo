@@ -45,7 +45,7 @@ class BaseAlignment:
         Returns: Tree object
         """
 
-        from jinfo.utils import calc_phylo_tree
+        from jinfo.utils.calc_phylo_tree import calc_phylo_tree
 
         return calc_phylo_tree(self)
 
@@ -57,7 +57,7 @@ class BaseAlignment:
         Returns: filtered Alignment object
         """
 
-        from jinfo.utils import remove_degenerate_seqs
+        from jinfo.utils.remove_degenerate_seqs import remove_degenerate_seqs
 
         return remove_degenerate_seqs(alignment_obj=self, identity_limit=identity_limit)
 

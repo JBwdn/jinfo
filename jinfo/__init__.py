@@ -1,7 +1,7 @@
 from .sequence import DNASeq, RNASeq, AASeq
 from .alignment import BaseAlignment
 from .phylogenetics import PhyloTree
-from .metabolite import Metabolite
+from .metabolite import BaseMetabolite
 
 from .utils.one_hot_dna import one_hot_dna
 from .utils.random_DNASeq import random_DNASeq
