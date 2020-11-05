@@ -1,3 +1,6 @@
+from jinfo import DNASeq
+
+
 class MuscleNotInstalledError(Exception):
     pass
 
@@ -6,15 +9,22 @@ class FastTree2NotInstalledError(Exception):
     pass
 
 
-def one_hot_dna(input_seq_str: str, max_seq_len: int):
+class SeqLengthError(Exception):
+    pass
+
+
+def one_hot_dna(seq_obj: DNASeq, max_seq_len: int):
     """
-    One hot encode a string format dna sequence.
+    One hot encode a DNASeq sequence for ML applications.
 
     Add zero padding up to the maximum length.
     Returns: 1D numpy array of length 4*max_seq_len
     """
 
     import numpy as np
+
+    if seq_obj.len > max_seq_len:
+        raise SeqLengthError("DNASeq.len exceeds max_seq_len")
 
     encode_dict = {
         "A": [1, 0, 0, 0],
@@ -23,25 +33,25 @@ def one_hot_dna(input_seq_str: str, max_seq_len: int):
         "G": [0, 0, 0, 1],
         "X": [0, 0, 0, 0],
     }
-    input_seq_upper = input_seq_str.upper()
-    padding = "".join(["X" for i in range(max_seq_len - len(input_seq_str))])
-    encoded_dna = [encode_dict[base] for base in input_seq_upper + padding]
+    padding = "".join(["X" for i in range(max_seq_len - seq_obj.len)])
+    encoded_dna = [encode_dict[base] for base in seq_obj.seq + padding]
     np_encoded = np.array(encoded_dna, dtype=int)
     return np_encoded.flatten()
 
 
-def random_dna(seq_length: int) -> str:
+def random_DNASeq(seq_length: int):
     """
-    Generate a random DNA sequence for primer design
+    Generate a random DNA sequence
 
-    Returns: String of length seq_length
+    Returns: random DNASeq of length seq_length
     """
 
     import random
+    from jinfo.sequence import DNASeq
 
     dna_base_list = ["A", "T", "C", "G"]
     seq_list = [random.choice(dna_base_list) for i in range(seq_length)]
-    return "".join(seq_list)
+    return DNASeq(sequence="".join(seq_list))
 
 
 def DNASeq_from_NCBI():
@@ -185,10 +195,8 @@ def multialign(seq_list: list, maxiters: int = 16):
     in_path = "_temp.fasta"
     out_path = "_temp2.fasta"
     seq_list_to_fasta(seq_list=seq_list, file_name=in_path)
-    bash_cmd = (
-        f"muscle -in {in_path} -out {out_path} -quiet -maxiters {maxiters}".split(
-            sep=" "
-        )
+    bash_cmd = f"muscle -in {in_path} -out {out_path} -quiet -maxiters {maxiters}".split(
+        sep=" "
     )
     subprocess.run(bash_cmd, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
 

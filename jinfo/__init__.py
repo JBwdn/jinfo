@@ -3,7 +3,7 @@
 from .sequence import DNASeq, RNASeq, AASeq
 from .utils import (
     one_hot_dna,
-    random_dna,
+    random_DNASeq,
     DNASeq_from_NCBI,
     seq_list_to_fasta,
     seq_list_from_fasta,

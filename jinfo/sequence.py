@@ -57,6 +57,14 @@ class BaseSeq:
         self.len = len(sequence)
         return
 
+    def update_label(self, label: str = "") -> None:
+        """
+        Replace the sequence string with a new string
+        """
+
+        self.label = label
+        return
+
     def align(self, seq2, maxiters: int = 16):
         """
         Perform alignment of two sequences, optionally control the number of iterations
@@ -171,8 +179,16 @@ class DNASeq(BaseSeq):
 
         return round(primer3.calcTm(self.seq), dp)
 
-    def to_fasta(self, filename: str, label: str = None):
-        return
+    def one_hot(self, max_len: int = None):
+        """
+        
+        """
+        from jinfo import one_hot_dna
+
+        if max_len:
+            return one_hot_dna(self, max_len)
+        else:
+            return one_hot_dna(self, self.len)
 
 
 class RNASeq(BaseSeq):
