@@ -1,4 +1,9 @@
+import os
+import sys
 import unittest
+
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
+
 from jinfo.sequence import (
     DNASeq,
     RNASeq,
@@ -36,8 +41,7 @@ class TestRNASeq(unittest.TestCase):
         self.assertEqual(self.rna_obj.seq, "AUGCA")
         self.assertEqual(self.rna_obj.reverse_transcribe(), "ATGCA")
         self.assertRaises(
-            SeqLengthError,
-            self.rna_obj.translate,
+            SeqLengthError, self.rna_obj.translate,
         )
         self.rna_obj.update_seq("AUGCAU")
 

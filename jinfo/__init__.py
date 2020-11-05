@@ -1,5 +1,3 @@
-#!/usr/bin/python
-
 from .sequence import DNASeq, RNASeq, AASeq
 from .alignment import BaseAlignment
 from .phylogenetics import PhyloTree
