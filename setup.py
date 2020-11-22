@@ -2,7 +2,7 @@ from setuptools import setup
 
 setup(
     name="jinfo",
-    version="0.15",
+    version="0.16",
     description="",
     author="Jake Bowden",
     url="https://github.com/JBwdn/jinfo",
