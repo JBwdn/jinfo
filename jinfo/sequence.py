@@ -180,10 +180,8 @@ class DNASeq(BaseSeq):
         return round(primer3.calcTm(self.seq), dp)
 
     def one_hot(self, max_len: int = None):
-        """
-        
-        """
-        from jinfo import one_hot_dna
+        """"""
+        from jinfo.utils.one_hot_dna import one_hot_dna
 
         if max_len:
             return one_hot_dna(self, max_len)

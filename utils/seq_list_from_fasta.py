@@ -1,10 +1,10 @@
 from typing import Union, Optional, List
-from jinfo.sequence import BaseSeq, DNASeq, RNASeq, AASeq
+from ..sequence import BaseSeq, DNASeq, RNASeq, AASeq
 
 ANY_SEQ = Union[BaseSeq, DNASeq, RNASeq, AASeq]
 
 
-def seq_list_from_fasta(file_path: str, seq_obj: ANY_SEQ = BaseSeq) -> List[ANY_SEQ]:
+def seq_list_from_fasta(file_path: str, seq_obj: ANY_SEQ) -> List[ANY_SEQ]:
     """
     Parse a multifasta file
 

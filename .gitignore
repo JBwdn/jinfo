@@ -131,3 +131,4 @@ jinfo/jinfo.egg-info
 function_tests_temp.py
 temp.fasta
 .vscode/
+.utils/
