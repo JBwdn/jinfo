@@ -10,16 +10,14 @@ class HmmerNotInstalledError(Exception):
 
 
 def seq_id_from_hmmer(result_path: str, seq_obj: ALL_SEQS = BaseSeq) -> ALL_SEQS:
-    """
-    
-    """
+    """"""
 
     return seq_obj()
 
 
 def phmmer(seq_list: List[ALL_SEQS], query_seq: ALL_SEQS) -> ALL_SEQS:
     """
-    
+
     ***Requires hmmer package***
     Returns:
     """
