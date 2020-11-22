@@ -6,7 +6,9 @@ class BaseAlignment:
     Iterator which holds sequence alignments and the respective sequence labels
     """
 
-    def __init__(self, aligned_sequences: list, labels: list = None, vocab: set = None):
+    def __init__(
+        self, aligned_sequences: list, labels: list = None, vocab: set = None
+    ) -> None:
         self.seqs = aligned_sequences
         self.seqs_str = [seq_obj.seq for seq_obj in self.seqs]
         self.vocab = vocab
@@ -30,29 +32,37 @@ class BaseAlignment:
             raise StopIteration
 
     def __str__(self):
-        import textwrap
-
-        seq_str_rows = [
-            textwrap.fill(seq_obj.seq, width=80).split("\n") for seq_obj in self.seqs
-        ]
         str_out = ""
-        for i in range(len(seq_str_rows)):
-            str_out += f"{self.labels[i]}:\n"
-            for j in range(len(seq_str_rows[i])):
-                str_out += f"{seq_str_rows[i][j]}\n"
-
-            str_out += "\n"
-
+        for seq_obj in self.seqs:
+            str_out += f"{seq_obj}\n"
         return str_out
 
     def calc_tree(self):
         """
         Calculate a phylogenetic tree from the alignment
+
         ***Requires FastTree2 package***
         Returns: Tree object
         """
-        from jinfo.utils import calc_phylo_tree
+
+        from jinfo.utils.calc_phylo_tree import calc_phylo_tree
 
         return calc_phylo_tree(self)
+
+    def identity_filter(self, identity_limit: int = 90, show_id_array: bool = False):
+        """
+        Filter similar sequences from the alignment
+
+        Remove sequences form the alignment with percantage identity above a certain limit
+        Returns: filtered Alignment object
+        """
+
+        from jinfo.utils.remove_degenerate_seqs import remove_degenerate_seqs
+
+        return remove_degenerate_seqs(
+            alignment_obj=self,
+            identity_limit=identity_limit,
+            show_id_array=show_id_array,
+        )
 
     pass

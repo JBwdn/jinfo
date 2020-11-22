@@ -1,4 +1,4 @@
-# jinfo v0.13
+# jinfo v0.15
 Extensible bio/informatics library for hackers
 https://pypi.org/project/jinfo/
 
@@ -6,10 +6,11 @@ https://pypi.org/project/jinfo/
 - Sequences: BaseSeq, DNASeq, RNASeq, AASeq
 - Alignments: BaseAlign
 - Phylogenetic Trees: PhyloTree
+- Small molecules: Metabolite
 
 ### Functions:
 - one_hot_dna
-- random_dna
+- random_DNASeq
 - DNASeq_from_NCBI
 - seq_list_to_fasta
 - seq_from_fasta
@@ -17,6 +18,8 @@ https://pypi.org/project/jinfo/
 - alignment_from_fasta
 - multialign
 - calc_phylo_tree
+- percentage_identity
+- remove_degenerate_seqs
 
 ### Admin TODO:
 - Pypi description
@@ -25,11 +28,11 @@ https://pypi.org/project/jinfo/
 ### Features TODO:
 - DNASeq.find_CDS()
 - DNASeq_from_NCBI()
-- bring one_hot_dna and random_dna in line with rest of package
-- chemical/metabolite class(s)
+- metabolite methods
 - Tests coverage
 - NCBI, ChEBI, BiGG databast interfaces
-- AASeq methods?
-- hmmer bindings
+- AASeq methods
+- hmmer bindings -> phmmer and nhmmer
 - tree methods
-- fix alignment __str__
+- object type hint + annotation coverage
+- how to deal with "-" in percentage indentity?
