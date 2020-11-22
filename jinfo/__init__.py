@@ -1,9 +1,9 @@
-from .sequence import BaseSeq, DNASeq, RNASeq, AASeq
-from .alignment import BaseAlignment
-from .phylogenetics import PhyloTree
-from .metabolite import BaseMetabolite
+from jinfo.sequence import BaseSeq, DNASeq, RNASeq, AASeq
+from jinfo.alignment import BaseAlignment
+from jinfo.phylogenetics import PhyloTree
+from jinfo.metabolite import BaseMetabolite
 
-from .utils import (
+from jinfo.utils import (
     one_hot_dna,
     random_DNASeq,
     DNASeq_from_NCBI,
@@ -18,4 +18,4 @@ from .utils import (
 )
 
 
-from .tables import DNA_VOCAB, RNA_VOCAB, AA_VOCAB, CODON_TABLE
+from jinfo.tables import DNA_VOCAB, RNA_VOCAB, AA_VOCAB, CODON_TABLE
