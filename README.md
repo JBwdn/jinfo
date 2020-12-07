@@ -1,4 +1,4 @@
-# jinfo v0.15
+# jinfo v0.20
 Extensible bio/informatics library for hackers
 https://pypi.org/project/jinfo/
 
