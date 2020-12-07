@@ -18,7 +18,7 @@ def calc_phylo_tree(alignment_obj: BaseAlignment) -> PhyloTree:
     from jinfo.utils.seq_list_to_fasta import seq_list_to_fasta
 
     try:
-        test_cmd = "FastTreeMP".split(" ")
+        test_cmd = "fasttreeMP".split(" ")
         subprocess.run(test_cmd, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
     except FileNotFoundError:
         raise FastTree2NotInstalledError
@@ -29,7 +29,7 @@ def calc_phylo_tree(alignment_obj: BaseAlignment) -> PhyloTree:
         seq_list=alignment_obj.seqs, file_name=in_path, label_list=alignment_obj.labels
     )
 
-    bash_cmd = f"FastTreeMP {in_path}".split(sep=" ")
+    bash_cmd = f"fasttreeMP {in_path}".split(sep=" ")
     with open(out_path, "w") as text_file:
         subprocess.run(bash_cmd, stdout=text_file)
 
