@@ -15,7 +15,7 @@ def seq_id_from_hmmer(result_path: str, seq_obj: ALL_SEQS = BaseSeq) -> ALL_SEQS
     return seq_obj()
 
 
-def phmmer(seq_list: List[ALL_SEQS], query_seq: ALL_SEQS) -> ALL_SEQS:
+def phmmer(db_seq_list: List[ALL_SEQS], query_seq: ALL_SEQS) -> ALL_SEQS:
     """
 
     ***Requires hmmer package***
@@ -38,7 +38,7 @@ def phmmer(seq_list: List[ALL_SEQS], query_seq: ALL_SEQS) -> ALL_SEQS:
     out_path = "_hmmer_temp_out.txt"
 
     query_seq.save_fasta(q_path)
-    seq_list_to_fasta(seq_list=seq_list, file_name=db_path, label_list=None)
+    seq_list_to_fasta(seq_list=db_seq_list, file_name=db_path, label_list=None)
 
     bash_cmd = f"phmmer {q_path} {db_path} -o {out_path} -cpu {mp.cpu_count()}".split(
         sep=" "
@@ -49,7 +49,7 @@ def phmmer(seq_list: List[ALL_SEQS], query_seq: ALL_SEQS) -> ALL_SEQS:
     hit_id = seq_id_from_hmmer(out_path)
     output_seq_obj = 0
 
-    cleanup_cmd = f"rm {q_path} {db_path} {out_path}".split(sep=" ")
+    # cleanup_cmd = f"rm {q_path} {db_path} {out_path}".split(sep=" ")
     subprocess.run(cleanup_cmd)
     return
 

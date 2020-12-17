@@ -9,3 +9,4 @@ from jinfo.utils.multialign import multialign
 from jinfo.utils.calc_phylo_tree import calc_phylo_tree
 from jinfo.utils.percentage_identity import percentage_identity
 from jinfo.utils.remove_degenerate_seqs import remove_degenerate_seqs
+from jinfo.utils.phmmer import phmmer
